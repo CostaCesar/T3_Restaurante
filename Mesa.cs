@@ -20,7 +20,7 @@ public class Mesa
         this.PodeSerUsada = podeUsar;
         this.DatasReservadas = new string[0];
         Usuarios = new Cliente[0];
-        Conta = new Comanda();
+        Conta = new Comanda("");
         return;
     }
 
@@ -64,8 +64,8 @@ public class Mesa
 
     public void AdicionarNaComanda(string item, double valor)
     {
-        String.Concat(this.Conta.Consumo, "\n \t - ");
-        String.Concat(this.Conta.Consumo, item);
+        this.Conta.Consumo = String.Concat(this.Conta.Consumo, "\n \t - ");
+        this.Conta.Consumo = String.Concat(this.Conta.Consumo, item);
         this.Conta.Valor += valor;
         return;
     }
@@ -82,6 +82,7 @@ public class Mesa
 
     public void Info(bool listarConsumo, bool listarClientes, bool listarDatas)
     {
+        Console.WriteLine("==============================================");
         Console.WriteLine(String.Format("<< Mesa {0}>>", this.Numero));
         Console.WriteLine("Status: " + (this.PodeSerUsada ? "Operacional" : "Inoperante"));
         if(listarDatas == true)
@@ -101,10 +102,12 @@ public class Mesa
         }
         if(listarConsumo == true)
         {
-            Console.WriteLine("Dados da comanda: ");
+            Console.Write("Dados da comanda: ");
             this.Conta.ListarConsumo();
-            Console.WriteLine(String.Format(">>>Valor Final: R${0.00}"));
+            Console.WriteLine("");
+            Console.WriteLine(String.Format(">>> Valor Final: {0:C}", this.Conta.Valor));
         }
+        Console.WriteLine("==============================================");
         return;
     }
 

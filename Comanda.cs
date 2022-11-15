@@ -14,14 +14,14 @@ public class Comanda {
         set { this._valor = value;}
     }
 
-    public Comanda(string consumo = "nada", double valor = 0.0)
+    public Comanda(string consumo, double valor = 0.0)
     {
         this._consumo = consumo;
         this._valor = valor;
     }
 
     public void ListarConsumo() {
-        Console.WriteLine(Consumo);
+        Console.Write(Consumo);
     }
     public double calcular10porcento() {
         this._valor += this._valor * 0.1;
