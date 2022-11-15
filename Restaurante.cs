@@ -16,6 +16,8 @@ public class Restaurante
         if(nMesas < 1)
             Mesas = new Mesa[1];
         else Mesas = new Mesa[nMesas];
+        for(int i = 0; i < nMesas; i++)
+            Mesas[i] = new Mesa(i, true);
     }
     
     public bool ReservarMesa(int nMesa, string data)

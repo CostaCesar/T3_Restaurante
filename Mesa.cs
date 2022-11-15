@@ -14,7 +14,7 @@ public class Mesa
     public Comanda Conta
     { get; private set; }
     
-    public Mesa(int numero, bool podeUsar, string data)
+    public Mesa(int numero, bool podeUsar)
     {
         this.Numero = numero;
         this.PodeSerUsada = podeUsar;
@@ -42,6 +42,7 @@ public class Mesa
         string[] novasDatas = new string[DatasReservadas.Length+1];
         DatasReservadas.CopyTo(novasDatas, 0);
         novasDatas[novasDatas.Length-1] = data;
+        DatasReservadas = novasDatas;
         Console.WriteLine("$ MESA RESERVADA COM SUCESSO $");
         return true;
     }
@@ -68,7 +69,17 @@ public class Mesa
         this.Conta.Valor += valor;
         return;
     }
-    
+
+    public void AdicionarCliente(Cliente adicionado)
+    {
+        Cliente[] novosClientes = new Cliente[this.Usuarios.Length+1];
+        this.Usuarios.CopyTo(novosClientes, 0);
+        novosClientes[novosClientes.Length-1] = adicionado;
+        Usuarios = novosClientes;
+        Console.WriteLine("$ CLIENTE \"" + adicionado.Nome + "\" ADICIONADO COM SUCESSO");
+        return;
+    }
+
     public void Info(bool listarConsumo, bool listarClientes, bool listarDatas)
     {
         Console.WriteLine(String.Format("<< Mesa {0}>>", this.Numero));
