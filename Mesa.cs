@@ -56,13 +56,7 @@ public class Mesa
         Console.WriteLine("$ MESA RESERVADA COM SUCESSO $");
         return true;
     }
-
-    public double DividirConta()
-    { return this.Conta.DividirConta(this.Usuarios.Length); }
-
-    public double Calcular10pc()
-    { return this.Conta.Calcular10pc(); }
-    public void Liberar(string data)
+    public void LiberarReserva(string data)
     {
         if(this.DatasReservadas.Contains(data))
         {
@@ -91,6 +85,13 @@ public class Mesa
         this.Conta.Valor += valor;
         return;
     }
+    public void ZerarComanda()
+    {
+        this.Conta.Consumo = "";
+        this.Conta.Valor = 0.0;
+        Console.WriteLine("$ Comanda " + this.Numero + " zerada $");
+        return;
+    }
 
     public void AdicionarCliente(Cliente adicionado)
     {
@@ -101,6 +102,29 @@ public class Mesa
         Console.WriteLine("$ CLIENTE \"" + adicionado.Nome + "\" ADICIONADO COM SUCESSO");
         return;
     }
+
+    public void RemoverCliente(int indice)
+    {
+        if(indice < 0 || indice > Usuarios.Length)
+        {
+            Console.WriteLine("# CLIENTE INEXISTENTE #");;
+            return;
+        }
+        Cliente[] novosClientes = new Cliente[this.Usuarios.Length-1];  // Cria novo vetor 
+        for(int i = 0; i < indice; i++)                                 // Copia
+            novosClientes[i] = Usuarios[i];
+        for(int i = 0; i < indice; i++)                                 // Retira
+            novosClientes[i] = Usuarios[i+1];
+        Usuarios = novosClientes;                                       // Troca a referencia
+        Console.WriteLine("$ CLIENTE REMOVIDO COM SUCESSO");
+        return;
+    }
+
+    public double DividirConta()
+    { return this.Conta.DividirConta(this.Usuarios.Length); }
+
+    public double Calcular10pc()
+    { return this.Conta.Calcular10pc(); }
 
     public void InfoMesa(bool listarConsumo, bool listarClientes, bool listarDatas)
     {

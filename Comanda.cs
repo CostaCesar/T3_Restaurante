@@ -1,35 +1,32 @@
 using System;
 
 public class Comanda {
-    private string _consumo;
-    private double _valor;
+
     public string Consumo
-    {
-        get { return _consumo;} 
-        set { this._consumo = value;}
-    }
+    { get; set; }
     public double Valor
-    {
-        get { return _valor;} 
-        set { this._valor = value;}
-    }
+    { get; set; }
 
     public Comanda(string consumo, double valor = 0.0)
     {
-        this._consumo = consumo;
-        this._valor = valor;
+        this.Consumo = consumo;
+        this.Valor = valor;
     }
 
     public void ListarConsumo() {
         Console.Write(Consumo);
     }
     public double Calcular10pc() {
-        this._valor += this._valor * 0.1;
-        return _valor;
+        this.Valor += this.Valor * 0.1;
+        return Valor;
     }
     public double DividirConta(int numPessoas) {
-        double valorPorPessoas = 0;
-        valorPorPessoas = this._valor / numPessoas;
+        if(numPessoas == 0)
+        {
+            Console.WriteLine("# NUMERO DE PESSOAS INVALIDO #");
+            return 0.0;
+        }
+        double valorPorPessoas = this.Valor / numPessoas;
         return valorPorPessoas;
     }
 }
