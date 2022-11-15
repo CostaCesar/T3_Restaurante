@@ -23,11 +23,11 @@ public class Comanda {
     public void ListarConsumo() {
         Console.Write(Consumo);
     }
-    public double calcular10porcento() {
+    public double Calcular10pc() {
         this._valor += this._valor * 0.1;
         return _valor;
     }
-    public double dividirConta(int numPessoas) {
+    public double DividirConta(int numPessoas) {
         double valorPorPessoas = 0;
         valorPorPessoas = this._valor / numPessoas;
         return valorPorPessoas;

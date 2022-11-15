@@ -20,13 +20,18 @@ public class Restaurante
             Mesas[i] = new Mesa(i, true);
     }
     
-    public bool ReservarMesa(int nMesa, string data)
+    public bool ReservarMesa(int nMesa, string data, ref Cliente reservando)
     {
         if(nMesa < 0 || nMesa >= Mesas.Length)
         {
             Console.WriteLine("# NUMERO DA MESA INEXISTENTE #");
             return false;
         }
-        return Mesas[nMesa].Reservar(data);
+        if(reservando == null)
+        {
+            Console.WriteLine("# CLIENTE NAO EXISTENTE #");
+            return false;
+        }
+        return Mesas[nMesa].Reservar(data, ref reservando);
     }
 }
