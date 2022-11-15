@@ -13,9 +13,10 @@ public class Mesa
     { get; private set; }
     public Cliente[] Usuarios
     { get; private set; }
-    public Comanda Conta
+    public Comanda ContaComida
     { get; private set; }
-    
+    public Comanda ContaBebida
+    { get; private set; }
     public Mesa(int numero, bool podeUsar)
     {
         this.Numero = numero;
@@ -23,7 +24,8 @@ public class Mesa
         this.DatasReservadas = new string[0];
         this.UsuariosReservados = new Cliente[0];
         this.Usuarios = new Cliente[0];
-        this.Conta = new Comanda("");
+        this.ContaComida = new Comanda();
+        this.ContaBebida = new Comanda();
         return;
     }
 
@@ -78,17 +80,29 @@ public class Mesa
         return;
     }
 
-    public void AdicionarNaComanda(string item, double valor)
+    public void AdicionarNaComanda(ComandaTipo comanda, string item, double valor, int quantidade)
     {
-        this.Conta.Consumo = String.Concat(this.Conta.Consumo, "\n \t - ");
-        this.Conta.Consumo = String.Concat(this.Conta.Consumo, item);
-        this.Conta.Valor += valor;
+        Comanda interno;
+        if(comanda == ComandaTipo.Comida)
+            interno = ContaComida;
+        else if(comanda == ComandaTipo.Bebida)
+            interno = ContaBebida;
+        else
+        {
+            Console.WriteLine("# COMANDA NAO ESPECIFICADA #");
+            return;
+        }
+        interno.Consumo = String.Concat(interno.Consumo, "\n \t - ");
+        interno.Consumo = String.Concat(interno.Consumo, quantidade);
+        interno.Consumo = String.Concat(interno.Consumo, " ");
+        interno.Consumo = String.Concat(interno.Consumo, item);
+        interno.Valor += (valor * quantidade);
         return;
     }
     public void ZerarComanda()
     {
-        this.Conta.Consumo = "";
-        this.Conta.Valor = 0.0;
+        this.ContaComida.Consumo = "";
+        this.ContaComida.Valor = 0.0;
         Console.WriteLine("$ Comanda " + this.Numero + " zerada $");
         return;
     }
@@ -121,10 +135,13 @@ public class Mesa
     }
 
     public double DividirConta()
-    { return this.Conta.DividirConta(this.Usuarios.Length); }
+    { return Comanda.DividirConta(this.Usuarios.Length, this.ContaBebida.Valor + this.ContaComida.Valor); }
 
-    public double Calcular10pc()
-    { return this.Conta.Calcular10pc(); }
+    public double ValorFinal()
+    { return Comanda.Calcular10pc(this.ContaComida.Valor + this.ContaBebida.Valor); }
+
+    public double ValorFinal_Dividido()
+    { return (this.ValorFinal() / this.Usuarios.Length);}
 
     public void InfoMesa(bool listarConsumo, bool listarClientes, bool listarDatas)
     {
@@ -151,10 +168,16 @@ public class Mesa
         }
         if(listarConsumo == true) // Mostrar Comanda
         {
-            Console.Write("Dados da comanda: ");
-            this.Conta.ListarConsumo();
+            Console.WriteLine("Dados da comanda: ");
+            Console.Write("Comida: ");
+            this.ContaComida.ListarConsumo();
             Console.WriteLine("");
-            Console.WriteLine(String.Format(">>> Valor Final: {0:C}", this.Conta.Valor));
+            Console.Write("Bebida: ");
+            this.ContaBebida.ListarConsumo();
+            Console.WriteLine("");
+            Console.WriteLine(String.Format(">>> Valor Total: {0:C}", this.ContaComida.Valor + this.ContaBebida.Valor));
+            Console.WriteLine(String.Format(">>> + Taxa de 10%: {0:C}", this.ValorFinal()));
+            Console.WriteLine(String.Format(">>> Dividindo por {0}: {1:C}", this.Usuarios.Length, this.ValorFinal_Dividido()));
         }
         Console.WriteLine("==============================================");
         return;

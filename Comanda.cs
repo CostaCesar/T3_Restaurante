@@ -1,5 +1,10 @@
 using System;
 
+public enum ComandaTipo
+{
+    Bebida,
+    Comida
+}
 public class Comanda {
 
     public string Consumo
@@ -7,26 +12,26 @@ public class Comanda {
     public double Valor
     { get; set; }
 
-    public Comanda(string consumo, double valor = 0.0)
+    public Comanda( double valor = 0.0)
     {
-        this.Consumo = consumo;
+        this.Consumo = "";
         this.Valor = valor;
     }
 
     public void ListarConsumo() {
         Console.Write(Consumo);
     }
-    public double Calcular10pc() {
-        this.Valor += this.Valor * 0.1;
-        return Valor;
+    public static double Calcular10pc(double valor) {
+        valor += valor * 0.1;
+        return valor;
     }
-    public double DividirConta(int numPessoas) {
+    public static double DividirConta(int numPessoas, double valor) {
         if(numPessoas == 0)
         {
             Console.WriteLine("# NUMERO DE PESSOAS INVALIDO #");
             return 0.0;
         }
-        double valorPorPessoas = this.Valor / numPessoas;
+        double valorPorPessoas = valor / numPessoas;
         return valorPorPessoas;
     }
 }
