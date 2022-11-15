@@ -3,7 +3,6 @@ using System;
 public class Comanda {
     private string _consumo;
     private double _valor;
-
     public string Consumo
     {
         get { return _consumo;} 
@@ -13,6 +12,12 @@ public class Comanda {
     {
         get { return _valor;} 
         set { this._valor = value;}
+    }
+
+    public Comanda(string consumo = "nada", double valor = 0.0)
+    {
+        this._consumo = consumo;
+        this._valor = valor;
     }
 
     public void ListarConsumo() {
@@ -26,11 +31,5 @@ public class Comanda {
         double valorPorPessoas = 0;
         valorPorPessoas = this._valor / numPessoas;
         return valorPorPessoas;
-    }
-
-    public Comanda(string consumo, double valor)
-    {
-        this._consumo = consumo;
-        this._valor = valor;
     }
 }
