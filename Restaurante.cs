@@ -1,2 +1,30 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+public class Restaurante
+{
+    public string Nome
+    { get; set; }
+    public string Enderec
+    { get; set; }
+    public Mesa[] Mesas
+    { get; private set; }
+
+    public Restaurante(string nome, string enderec, int nMesas)
+    {
+        this.Nome = nome;
+        this.Enderec = enderec;
+        if(nMesas < 1)
+            Mesas = new Mesa[1];
+        else Mesas = new Mesa[nMesas];
+    }
+    
+    public bool ReservarMesa(int nMesa, string data)
+    {
+        if(nMesa < 0 || nMesa >= Mesas.Length)
+        {
+            Console.WriteLine("# NUMERO DA MESA INEXISTENTE #");
+            return false;
+        }
+        return Mesas[nMesa].Reservar(data);
+    }
+}
