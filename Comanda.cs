@@ -1,26 +1,36 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class Comanda {
-    private string consumo;
-    private double valor;
-    public string Consumo { get; set }
-    public double Valor { get; set }
+    private string _consumo;
+    private double _valor;
+
+    public string Consumo
+    {
+        get { return _consumo;} 
+        set { this._consumo = value;}
+    }
+    public double Valor
+    {
+        get { return _valor;} 
+        set { this._valor = value;}
+    }
 
     public void ListarConsumo() {
-        Console.WriteLine(getConsumo);
+        Console.WriteLine(Consumo);
     }
     public double calcular10porcento() {
-        this.valor += this.valor * 0.1;
-        return valor;
+        this._valor += this._valor * 0.1;
+        return _valor;
     }
     public double dividirConta(int numPessoas) {
         double valorPorPessoas = 0;
-        valorPorPessoas = this.valor / numPessoas;
+        valorPorPessoas = this._valor / numPessoas;
         return valorPorPessoas;
     }
 
+    public Comanda(string consumo, double valor)
+    {
+        this._consumo = consumo;
+        this._valor = valor;
+    }
 }
