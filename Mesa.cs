@@ -127,7 +127,7 @@ public class Mesa
         Cliente[] novosClientes = new Cliente[this.Usuarios.Length-1];  // Cria novo vetor 
         for(int i = 0; i < indice; i++)                                 // Copia
             novosClientes[i] = Usuarios[i];
-        for(int i = 0; i < indice; i++)                                 // Retira
+        for(int i = indice; i < novosClientes.Length; i++)                                 // Retira
             novosClientes[i] = Usuarios[i+1];
         Usuarios = novosClientes;                                       // Troca a referencia
         Console.WriteLine("$ CLIENTE REMOVIDO COM SUCESSO");
