@@ -7,6 +7,8 @@ public class Mesa
     { get; private set; }
     public bool PodeSerUsada
     { get; set; }
+    public bool Reservada
+    { get; set; }
     public string[] DatasReservadas
     { get; private set; }
     public Cliente[] UsuariosReservados
@@ -34,12 +36,14 @@ public class Mesa
         // Testando disponibilidade da mesa
         if(this.PodeSerUsada == false)
         {
-            Console.WriteLine("# ESTA MESA NAO ESTA DISPONIVEL PARA RESERVAS #");
+            Console.WriteLine("\t|\t # ESTA MESA NAO ESTA DISPONIVEL PARA RESERVAS #");
+            this.Reservada = true;
             return false;
         }
         if(this.DatasReservadas.Contains(data))
         {
-            Console.WriteLine("# ESTA MESA JA ESTA RESERVADA NA DATA " + data + " #");
+            Console.WriteLine("\t|\t # ESTA MESA JA ESTA RESERVADA NA DATA " + data + " #");
+            this.Reservada = true;
             return false;
         }
         
@@ -55,7 +59,8 @@ public class Mesa
         novosUsuarios[novosUsuarios.Length-1] = reservador;
         UsuariosReservados = novosUsuarios;
         
-        Console.WriteLine("$ MESA RESERVADA COM SUCESSO $");
+        Console.WriteLine("\t|\t $ MESA RESERVADA COM SUCESSO $");
+        this.Reservada = true;
         return true;
     }
     public void LiberarReserva(string data)
@@ -76,7 +81,7 @@ public class Mesa
                 novosUsuarios[i] = UsuariosReservados[i+1];
             }
         }
-        Console.WriteLine("$ DATA " + data + "REMOVIDA $");
+        Console.WriteLine("\t|\t $ DATA " + data + "REMOVIDA $");
         return;
     }
 
@@ -89,7 +94,7 @@ public class Mesa
             interno = ContaBebida;
         else
         {
-            Console.WriteLine("# COMANDA NAO ESPECIFICADA #");
+            Console.WriteLine("\t|\t # COMANDA NAO ESPECIFICADA #");
             return;
         }
         interno.Consumo = String.Concat(interno.Consumo, "\n \t - ");
@@ -103,7 +108,7 @@ public class Mesa
     {
         this.ContaComida.Consumo = "";
         this.ContaComida.Valor = 0.0;
-        Console.WriteLine("$ Comanda " + this.Numero + " zerada $");
+        Console.WriteLine("\t|\t $ Comanda " + this.Numero + " zerada $");
         return;
     }
 
@@ -113,7 +118,7 @@ public class Mesa
         this.Usuarios.CopyTo(novosClientes, 0);                         // Copia
         novosClientes[novosClientes.Length-1] = adicionado;             // Adiciona
         Usuarios = novosClientes;                                       // Troca a referencia
-        Console.WriteLine("$ CLIENTE \"" + adicionado.Nome + "\" ADICIONADO COM SUCESSO");
+        Console.WriteLine("\t|\t $ CLIENTE \"" + adicionado.Nome + "\" ADICIONADO COM SUCESSO");
         return;
     }
 
@@ -121,7 +126,7 @@ public class Mesa
     {
         if(indice < 0 || indice > Usuarios.Length)
         {
-            Console.WriteLine("# CLIENTE INEXISTENTE #");;
+            Console.WriteLine("\t|\t # CLIENTE INEXISTENTE #");;
             return;
         }
         Cliente[] novosClientes = new Cliente[this.Usuarios.Length-1];  // Cria novo vetor 
@@ -130,16 +135,31 @@ public class Mesa
         for(int i = 0; i < indice; i++)                                 // Retira
             novosClientes[i] = Usuarios[i+1];
         Usuarios = novosClientes;                                       // Troca a referencia
-        Console.WriteLine("$ CLIENTE REMOVIDO COM SUCESSO");
+        Console.WriteLine("\t|\t $ CLIENTE REMOVIDO COM SUCESSO");
         return;
     }
+    public void ListarClientes() {
+        for (int i = 0; i < Usuarios.Length; i++)
+        {
+            Console.WriteLine("\t|\t Nome:" + Usuarios[i].Nome);
+            Console.WriteLine("\t|\t Email:" + Usuarios[i].Email);
+            Console.WriteLine("\t|\t Indice = " + i + 1);
 
+        }
+
+    }
     public double DividirConta()
     { return Comanda.DividirConta(this.Usuarios.Length, this.ContaBebida.Valor + this.ContaComida.Valor); }
 
     public double ValorFinal()
-    { return Comanda.Calcular10pc(this.ContaComida.Valor + this.ContaBebida.Valor); }
-
+    { return Comanda.Totalcom10pc(this.ContaComida.Valor + this.ContaBebida.Valor); }
+    public double Imprimir10pc() {
+        double valor10;
+        valor10 = this.ContaComida.Valor + this.ContaBebida.Valor;
+        valor10 = valor10 * 0.1;
+        return valor10;
+        
+    }
     public double ValorFinal_Dividido()
     { return (this.ValorFinal() / this.Usuarios.Length);}
 
@@ -176,7 +196,8 @@ public class Mesa
             this.ContaBebida.ListarConsumo();
             Console.WriteLine("");
             Console.WriteLine(String.Format(">>> Valor Total: {0:C}", this.ContaComida.Valor + this.ContaBebida.Valor));
-            Console.WriteLine(String.Format(">>> + Taxa de 10%: {0:C}", this.ValorFinal()));
+            Console.WriteLine(String.Format(">>> Taxa de 10%: {0:C}", this.Imprimir10pc()));
+            Console.WriteLine(String.Format(">>> Valor total + Taxa de 10%: {0:C}", this.ValorFinal()));
             Console.WriteLine(String.Format(">>> Dividindo por {0}: {1:C}", this.Usuarios.Length, this.ValorFinal_Dividido()));
         }
         Console.WriteLine("==============================================");

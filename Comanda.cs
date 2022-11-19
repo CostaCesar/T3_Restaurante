@@ -21,7 +21,7 @@ public class Comanda {
     public void ListarConsumo() {
         Console.Write(Consumo);
     }
-    public static double Calcular10pc(double valor) {
+    public static double Totalcom10pc(double valor) {
         valor += valor * 0.1;
         return valor;
     }
