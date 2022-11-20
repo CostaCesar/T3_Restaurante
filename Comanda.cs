@@ -28,7 +28,7 @@ public class Comanda {
     public static double DividirConta(int numPessoas, double valor) {
         if(numPessoas == 0)
         {
-            Console.WriteLine("# NUMERO DE PESSOAS INVALIDO #");
+            Console.WriteLine("\t|\t # NUMERO DE PESSOAS INVALIDO #");
             return 0.0;
         }
         double valorPorPessoas = valor / numPessoas;
