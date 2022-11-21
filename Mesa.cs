@@ -82,7 +82,7 @@ public class Mesa
                 novosUsuarios[i] = UsuariosReservados[i+1];
             }
         }
-        Console.WriteLine(T + " $ DATA " + data + "REMOVIDA $");
+        Console.WriteLine(T + " $ DATA " + data + " REMOVIDA $");
         return;
     }
 
