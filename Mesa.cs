@@ -46,6 +46,7 @@ public class Mesa
         if(this.Reservada == true)
         {
             this.Reservada = false;
+            this.ZerarComanda();
             Console.WriteLine(T + " $ DATA REMOVIDA $");
         }
         return;
@@ -72,6 +73,8 @@ public class Mesa
     }
     public void ZerarComanda()
     {
+        this.ContaBebida.Consumo = "";
+        this.ContaBebida.Valor = 0.0;
         this.ContaComida.Consumo = "";
         this.ContaComida.Valor = 0.0;
         Console.WriteLine(T + " $ Comanda " + this.Numero + " zerada $");
