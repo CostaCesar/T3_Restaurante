@@ -8,11 +8,12 @@ public class Program
     public static void Main()
     {
         int opção,quantMaxMesa , mesa , indice ,quantidade, tipo;
-        string data,nomeCliente,emailCliente;
+        string data = "",nomeCliente,emailCliente;
         Console.WriteLine(Line);
         Console.WriteLine("\t| Bem Vindo ao sistema do Restaurante Caio & Kaio: ");
         Console.Write(T + " Digite a data de hoje: ");
         data = Console.ReadLine();
+        if(data == null) data = "";
         Console.Write(T + " Digite a quantidade de mesas do dia: ");
         quantMaxMesa = int.Parse(Console.ReadLine());
         Restaurante restaurante = new Restaurante("Caio & Kaio" , "Coltec" , quantMaxMesa );
@@ -154,7 +155,7 @@ public class Program
                         }
                         else if (restaurante.Mesas[mesa - 1].Reservada == true)
                         {
-                            restaurante.Mesas[mesa - 1].InfoMesa(true , true ,true);
+                            restaurante.Mesas[mesa - 1].InfoMesa(true , true);
                         }
                         Console.WriteLine(Line);
                         break;
@@ -169,10 +170,10 @@ public class Program
                         }
                         else if (restaurante.Mesas[mesa - 1].Reservada == true)
                         {
-                            restaurante.Mesas[mesa - 1].InfoMesa(true, true, true);
+                            restaurante.Mesas[mesa - 1].InfoMesa(true, true);
                         }
                         restaurante.Mesas[mesa - 1].ZerarComanda();
-                        restaurante.Mesas[mesa - 1].LiberarReserva(data);
+                        restaurante.LiberarMesa(mesa -1);
                         break; 
                     }
                 case 0: 

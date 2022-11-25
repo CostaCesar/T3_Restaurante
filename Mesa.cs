@@ -5,26 +5,20 @@ public class Mesa
 {
     public int Numero
     { get; private set; }
-    public bool PodeSerUsada
-    { get; set; }
+    public string Data
+    { get; private set;}
     public bool Reservada
     { get; set; }
-    public string[] DatasReservadas
-    { get; private set; }
-    public Cliente[] UsuariosReservados
-    { get; private set; }
     public Cliente[] Usuarios
     { get; private set; }
     public Comanda ContaComida
     { get; private set; }
     public Comanda ContaBebida
     { get; private set; }
-    public Mesa(int numero, bool podeUsar)
+    public Mesa(int numero)
     {
         this.Numero = numero;
-        this.PodeSerUsada = podeUsar;
-        this.DatasReservadas = new string[0];
-        this.UsuariosReservados = new Cliente[0];
+        this.Data = "";
         this.Usuarios = new Cliente[0];
         this.ContaComida = new Comanda();
         this.ContaBebida = new Comanda();
@@ -35,54 +29,25 @@ public class Mesa
     public bool Reservar(string data, ref Cliente reservador)
     {
         // Testando disponibilidade da mesa
-        if(this.PodeSerUsada == false)
+        if(this.Reservada == true)
         {
-            Console.WriteLine(T + " # ESTA MESA NAO ESTA DISPONIVEL PARA RESERVAS #");
+            Console.WriteLine(T + " # ESTA MESA JA ESTA RESERVADA #");
             this.Reservada = true;
             return false;
         }
-        if(this.DatasReservadas.Contains(data))
-        {
-            Console.WriteLine(T + " # ESTA MESA JA ESTA RESERVADA NA DATA " + data + " #");
-            this.Reservada = true;
-            return false;
-        }
-        
-        // Reservando datas...
-        string[] novasDatas = new string[DatasReservadas.Length+1];
-        DatasReservadas.CopyTo(novasDatas, 0);
-        novasDatas[novasDatas.Length-1] = data;
-        DatasReservadas = novasDatas;
-        
-        // Reservando usuarios...
-        Cliente[] novosUsuarios = new Cliente[UsuariosReservados.Length+1];
-        UsuariosReservados.CopyTo(novosUsuarios, 0);
-        novosUsuarios[novosUsuarios.Length-1] = reservador;
-        UsuariosReservados = novosUsuarios;
         
         Console.WriteLine(T + " $ MESA RESERVADA COM SUCESSO $");
         this.Reservada = true;
+        this.Data = data;
         return true;
     }
-    public void LiberarReserva(string data)
+    public void LiberarReserva()
     {
-        if(this.DatasReservadas.Contains(data))
+        if(this.Reservada == true)
         {
-            int removerEm = Array.IndexOf(this.DatasReservadas, data);
-            string[] novasDatas = new string[DatasReservadas.Length-1];
-            Cliente[] novosUsuarios = new Cliente[UsuariosReservados.Length-1];
-            for(int i = 0; i < removerEm; i++)
-            {
-                novasDatas[i] = DatasReservadas[i];
-                novosUsuarios[i] = UsuariosReservados[i];
-            }
-            for(int i = removerEm; i < novasDatas.Length; i++)
-            {
-                novasDatas[i] = DatasReservadas[i+1];
-                novosUsuarios[i] = UsuariosReservados[i+1];
-            }
+            this.Reservada = false;
+            Console.WriteLine(T + " $ DATA REMOVIDA $");
         }
-        Console.WriteLine(T + " $ DATA " + data + " REMOVIDA $");
         return;
     }
 
@@ -164,20 +129,11 @@ public class Mesa
     public double ValorFinal_Dividido()
     { return (this.ValorFinal() / this.Usuarios.Length);}
 
-    public void InfoMesa(bool listarConsumo, bool listarClientes, bool listarDatas)
+    public void InfoMesa(bool listarConsumo, bool listarClientes)
     {
         Console.WriteLine(T + String.Format(" << Mesa {0}>>", this.Numero + 1));
-        Console.WriteLine(T + " Status: " + (this.PodeSerUsada ? "Operacional" : "Inoperante"));
-        if(listarDatas == true) // Mostrar Datas
-        {
-            Console.WriteLine(T + " Datas Reservadas:");
-            for(int i = 0; i < DatasReservadas.Length; i++)
-            {
-                Console.Write(T + " -" + DatasReservadas[i]);
-                Console.WriteLine(
-                    " : " + UsuariosReservados[i].Nome + " (" + UsuariosReservados[i].Email + ")");
-            }
-        }
+        Console.WriteLine(T + " Reservada: " + (this.Reservada ? "Sim, " + this.Data : "Nao"));
+
         if(listarClientes == true) // Mostrar Clientes
         {
             Console.WriteLine(T + " Clientes na mesa:");

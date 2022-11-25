@@ -17,7 +17,7 @@ public class Restaurante
             Mesas = new Mesa[1];
         else Mesas = new Mesa[nMesas];
         for(int i = 0; i < nMesas; i++)
-            Mesas[i] = new Mesa(i, true);
+            Mesas[i] = new Mesa(i);
     }
     
     public bool ReservarMesa(int nMesa, string data, ref Cliente reservando)
@@ -33,5 +33,16 @@ public class Restaurante
             return false;
         }
         return Mesas[nMesa].Reservar(data, ref reservando);
+    }
+
+    public void LiberarMesa(int nMesa)
+    {
+        if(nMesa < 0 || nMesa >= Mesas.Length)
+        {
+            Console.WriteLine("# NUMERO DA MESA INEXISTENTE #");
+            return;
+        }
+        this.Mesas[nMesa].LiberarReserva();
+        return;
     }
 }
